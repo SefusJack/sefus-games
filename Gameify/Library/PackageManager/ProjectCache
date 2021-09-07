@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637657785910213449
-    m_Hash: 1057299360
+      ticks: 637664506344248737
+    m_Hash: 3870291422
   m_LockFileStatus:
     m_FilePath: C:/Users/seth-/Documents/GitHub/sefus-games/Gameify/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637657786094977994
-    m_Hash: 1016591461
+      ticks: 637664506344248737
+    m_Hash: 2579885654
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_PackageAssets:

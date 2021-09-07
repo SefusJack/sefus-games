@@ -1,0 +1,36 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class Card : MonoBehaviour
+{
+    void Awake()
+    {
+        Text front = GetComponentInChildren<Text>();
+        Debug.Log(front.text);
+        string back;
+    }
+    
+    /*
+    public Card()
+    {
+        front = "";
+        back = "";
+    }
+    public Card(string f, string b)
+    {
+        front = f;
+        back = b;
+    }
+
+    public string getBack()
+    {
+        return back;
+    }
+    public string getFront()
+    {
+        return front;
+    }
+    */
+}
