@@ -7,7 +7,7 @@ public class CardButton : MonoBehaviour
     public Decks decks;
     public void OnClick()
     {
-        decks.setCurrentCard(getCardIndex());
+        decks.selectCard(getCardIndex());
     }
     public int getCardIndex()
     {

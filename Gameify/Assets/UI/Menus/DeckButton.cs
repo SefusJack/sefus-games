@@ -9,7 +9,7 @@ public class DeckButton : MonoBehaviour
     public Decks decks;
     public void OnClick()
     {
-        decks.setCurrentDeck(getDeckIndex());
+        decks.selectDeck(getDeckIndex());
     }
     public int getDeckIndex()
     {

@@ -14,16 +14,20 @@ public class Card
     {
         info = list;
     }
-    public void SetInfo(List<string> i)
+    public string getInfoLine(int index)
     {
-        info = i;
+        return info[index];
     }
-    public void Set(int index, string s)
+    public void setInfoLine(int index, string s)
     {
         info[index] = s;
     }
-    public string Get(int index)
+    public List<string> getInfo(int index)
     {
-        return info[index];
+        return info;
+    }
+    public void setInfo(List<string> i)
+    {
+        info = i;
     }
 }
