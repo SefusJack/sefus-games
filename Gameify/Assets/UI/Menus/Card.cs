@@ -5,7 +5,7 @@ using UnityEngine;
 public class Card
 {
     List<string> info;
-    string title;
+    public string title;
     public Card()
     {
         info = new List<string>();
@@ -14,6 +14,10 @@ public class Card
     {
         info = list;
     }
+    public void SetInfo(List<string> i)
+    {
+        info = i;
+    }
     public void Set(int index, string s)
     {
         info[index] = s;
@@ -21,13 +25,5 @@ public class Card
     public string Get(int index)
     {
         return info[index];
-    }
-    public void SetTitle(string s)
-    {
-        title = s;
-    }
-    public string GetTitle()
-    {
-        return title;
     }
 }

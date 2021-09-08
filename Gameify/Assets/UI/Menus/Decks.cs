@@ -46,7 +46,9 @@ public class Decks : MonoBehaviour
         {
             GameObject go = Instantiate(cfab, new Vector3(0, 0, 0), Quaternion.identity);
             go.transform.SetParent(cspace);
-            go.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = curdeck.Get(i).GetTitle();
+            Debug.Log(curdeck.Get(i));
+            Debug.Log(curdeck.Get(i).title);
+            //go.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = curdeck.Get(i).title;
             go.SetActive(true);
         }
     }
@@ -69,6 +71,7 @@ public class Decks : MonoBehaviour
             info.Add(field.text);
         }
         curdeck.Add(new Card(info));
+        curdeck.Get(curcardpos).title = "Test";
     }
     public GameObject cinfo;
     public void setCurrentCard(int index)
@@ -89,9 +92,10 @@ public class Decks : MonoBehaviour
         {
             info.Add(field.text);
         }
-        curcard.SetTitle(info[0]);
-        cspace.GetChild(curcardpos).GetChild(0).GetComponent<TextMeshProUGUI>().text = curcard.GetTitle();
-        curdeck.Set(new Card(info), curcardpos);
+        curcard.title = info[0];
+        curcard.SetInfo(info);
+        cspace.GetChild(curcardpos).GetChild(0).GetComponent<TextMeshProUGUI>().text = curcard.title;
+        curdeck.Set(curcard, curcardpos);
     }
 }
 
