@@ -9,10 +9,13 @@ public class Card
     public Card()
     {
         info = new List<string>();
+        info.Add("");
+        info.Add("");
     }
     public Card(List<string> list)
     {
         info = list;
+        title = list[0];
     }
     public string getInfoLine(int index)
     {

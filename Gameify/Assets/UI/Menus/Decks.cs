@@ -9,7 +9,7 @@ public class Decks : MonoBehaviour
     List<Deck> decks;
 
 
-    Deck curdeck;
+    public Deck curdeck;
     int curdeckpos;
     Card curcard;
     int curcardpos;
@@ -22,6 +22,8 @@ public class Decks : MonoBehaviour
     public Transform cspace;
     public GameObject cinfo;
 
+    public bool newDeck = false;
+
     public void Start()
     {
         decks = new List<Deck>();
@@ -29,6 +31,7 @@ public class Decks : MonoBehaviour
 
     public void addDeck()
     {
+        newDeck = true;
         decks.Add(new Deck(""));
         curdeckpos = decks.Count - 1;
         curdeck = decks[curdeckpos];
@@ -45,6 +48,7 @@ public class Decks : MonoBehaviour
     }
     public void selectDeck(int index)
     {
+        newDeck = false;
         curdeckpos = index;
         curdeck = decks[index];
         dtitlefield.text = curdeck.title;
@@ -60,13 +64,13 @@ public class Decks : MonoBehaviour
             displayDecks();
         }
     }
-    public bool hasDeckTitle(Deck d)
+    public bool hasDeckTitle(Deck d, string s)
     {
         foreach (Deck dtmp in decks)
         {
             if (d != dtmp)
             {
-                if (d.title == dtmp.title)
+                if (s == dtmp.title)
                 {
                     return true;
                 }
@@ -84,6 +88,17 @@ public class Decks : MonoBehaviour
             field.text = curcard.getInfoLine(i);
             i++;
         }
+    }
+    public void editCurrentCard()
+    {
+        List<string> info = new List<string>();
+        foreach (TMP_InputField field in cinfo.GetComponentsInChildren<TMP_InputField>())
+        {
+            info.Add(field.text);
+        }
+        curcard = new Card(info);
+        cspace.GetChild(curcardpos).GetChild(0).GetComponent<TextMeshProUGUI>().text = curcard.title;
+        curdeck.setCard(curcard, curcardpos);
     }
     public void displayDecks()
     {
@@ -113,52 +128,9 @@ public class Decks : MonoBehaviour
             go.SetActive(true);
         }
     }
-    /*
-    public void setDeckTitle()
+    public void Remove(Deck d)
     {
-        dspace.GetComponentsInChildren<TextMeshProUGUI>()[curdeckpos].text = decktitle.text;
+        decks.Remove(d);
     }
-
-    public GameObject cfab;
-    public Transform cspace;
-    public void addCard()
-    {
-        GameObject go = Instantiate(cfab, new Vector3(0, 0, 0), Quaternion.identity);
-        go.transform.SetParent(cspace);
-        go.SetActive(true);
-
-        List <string> info = new List<string>();
-        foreach (TextMeshProUGUI field in go.GetComponentsInChildren<TextMeshProUGUI>())
-        {
-            info.Add(field.text);
-        }
-        curdeck.Add(new Card(info));
-        curdeck.Get(curcardpos).title = info[0];
-    }
-    public GameObject cinfo;
-    public void setCurrentCard(int index)
-    {
-        curcardpos = index;
-        curcard = curdeck.Get(index);
-        int i = 0;
-        foreach (TMP_InputField field in cinfo.GetComponentsInChildren<TMP_InputField>())
-        {
-            field.text = curcard.Get(i);
-            i++;
-        }
-    }
-    public void editCurrentCard()
-    {
-        List<string> info = new List<string>();
-        foreach (TMP_InputField field in cinfo.GetComponentsInChildren<TMP_InputField>())
-        {
-            info.Add(field.text);
-        }
-        curcard.title = info[0];
-        curcard.SetInfo(info);
-        cspace.GetChild(curcardpos).GetChild(0).GetComponent<TextMeshProUGUI>().text = curcard.title;
-        curdeck.Set(curcard, curcardpos);
-    }
-    */
 }
 
