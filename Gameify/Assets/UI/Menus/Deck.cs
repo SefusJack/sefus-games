@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Deck
 {
     List<Card> deck;
@@ -24,5 +25,12 @@ public class Deck
     public void setCard(Card c, int i)
     {
         deck[i] = c;
+    }
+    public void printCards()
+    {
+        foreach (Card c in deck)
+        {
+            c.printInfo();
+        }
     }
 }

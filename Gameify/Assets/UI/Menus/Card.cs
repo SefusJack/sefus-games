@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Card
 {
     List<string> info;
@@ -32,5 +33,12 @@ public class Card
     public void setInfo(List<string> i)
     {
         info = i;
+    }
+    public void printInfo()
+    {
+        foreach (string s in info)
+        {
+            Debug.Log(s);
+        }
     }
 }

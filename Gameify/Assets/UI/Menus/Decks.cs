@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -27,6 +29,16 @@ public class Decks : MonoBehaviour
     public void Start()
     {
         decks = new List<Deck>();
+        string[] files = System.IO.Directory.GetFiles("./Decks/");
+        foreach (string file in files)
+        {
+            Debug.Log(Path.GetExtension(file));
+            if(Path.GetExtension(file) == ".dat")
+            {
+                addDeck(file);
+            }
+        }
+        displayDecks();
     }
 
     public void addDeck()
@@ -39,10 +51,18 @@ public class Decks : MonoBehaviour
         go.transform.SetParent(dspace);
         go.SetActive(true);
     }
+    public void addDeck(string filepath)
+    {
+        decks.Add(loadDeck(filepath));
+        GameObject go = Instantiate(dfab, new Vector3(0, 0, 0), Quaternion.identity);
+        go.transform.SetParent(dspace);
+        go.SetActive(true);
+    }
     public void addCard()
     {
         curdeck.Add(new Card());
         GameObject go = Instantiate(cfab, new Vector3(0, 0, 0), Quaternion.identity);
+        saveDeck();
         go.transform.SetParent(cspace);
         go.SetActive(true);
     }
@@ -63,6 +83,7 @@ public class Decks : MonoBehaviour
             dtitle.text = dtitlefield.text;
             displayDecks();
         }
+        saveDeck();
     }
     public bool hasDeckTitle(Deck d, string s)
     {
@@ -99,6 +120,7 @@ public class Decks : MonoBehaviour
         curcard = new Card(info);
         cspace.GetChild(curcardpos).GetChild(0).GetComponent<TextMeshProUGUI>().text = curcard.title;
         curdeck.setCard(curcard, curcardpos);
+        saveDeck();
     }
     public void displayDecks()
     {
@@ -131,6 +153,27 @@ public class Decks : MonoBehaviour
     public void Remove(Deck d)
     {
         decks.Remove(d);
+    }
+
+    public void saveDeck()
+    {
+        string destination = "./Decks/" + curdeck.title + ".dat";
+        FileStream file;
+        if (File.Exists(destination)) file = File.OpenWrite(destination);
+        else file = File.Create(destination);
+        BinaryFormatter bf = new BinaryFormatter();
+        bf.Serialize(file, curdeck);
+        file.Close();
+    }
+    public Deck loadDeck(string filepath)
+    {
+        FileStream file;
+        file = File.OpenRead(filepath);
+        BinaryFormatter bf = new BinaryFormatter();
+        Deck temp = (Deck)bf.Deserialize(file);
+        file.Close();
+        temp.printCards();
+        return temp;
     }
 }
 
