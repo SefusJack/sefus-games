@@ -22,7 +22,7 @@ public class DeckTitleMenu : MonoBehaviour
         {
             if (decks.newDeck)
             {
-                decks.Remove(decks.curdeck);
+                decks.RemoveDeck(decks.curdeck);
                 decktitlemenu.SetActive(false);
                 decks.displayDecks();
             }

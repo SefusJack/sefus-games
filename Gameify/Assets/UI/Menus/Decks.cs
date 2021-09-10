@@ -32,7 +32,6 @@ public class Decks : MonoBehaviour
         string[] files = System.IO.Directory.GetFiles("./Decks/");
         foreach (string file in files)
         {
-            Debug.Log(Path.GetExtension(file));
             if(Path.GetExtension(file) == ".dat")
             {
                 addDeck(file);
@@ -150,9 +149,23 @@ public class Decks : MonoBehaviour
             go.SetActive(true);
         }
     }
-    public void Remove(Deck d)
+    public void RemoveDeck(Deck d)
     {
         decks.Remove(d);
+    }
+    public void RemoveCurrentDeck()
+    {
+        File.Delete("./Decks/" + curdeck.title + ".dat");
+        Debug.Log("./Decks/" + curdeck.title + ".dat");
+        decks.Remove(curdeck);
+        dtitlefield.text = "";
+        displayDecks();
+    }
+    public void RemoveCurrentCard()
+    {
+        curdeck.Remove(curcard);
+        saveDeck();
+        displayCards();
     }
 
     public void saveDeck()
@@ -172,7 +185,6 @@ public class Decks : MonoBehaviour
         BinaryFormatter bf = new BinaryFormatter();
         Deck temp = (Deck)bf.Deserialize(file);
         file.Close();
-        temp.printCards();
         return temp;
     }
 }

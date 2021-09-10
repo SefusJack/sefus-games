@@ -18,6 +18,11 @@ public class Deck
         deck.Add(c);
         Count++;
     }
+    public void Remove(Card c)
+    {
+        deck.Remove(c);
+        Count--;
+    }
     public Card getCard(int i)
     {
         return deck[i];
