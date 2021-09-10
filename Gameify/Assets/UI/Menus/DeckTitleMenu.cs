@@ -36,6 +36,7 @@ public class DeckTitleMenu : MonoBehaviour
     }
     public void SaveButton()
     {
+        Debug.Log("test");
         if (decks.hasDeckTitle(decks.curdeck, dtitlefield.text))
         {
             dtitle.text = "This Title Already Exists";
