@@ -10,7 +10,6 @@ public class Decks : MonoBehaviour
 {
     List<Deck> decks;
 
-
     public Deck curdeck;
     int curdeckpos;
     Card curcard;
@@ -18,13 +17,19 @@ public class Decks : MonoBehaviour
 
     public TMP_InputField dtitlefield;
     public TextMeshProUGUI dtitle;
-    public GameObject dfab;
+    public GameObject dfabstate1;
+    public GameObject dfabstate2;
     public Transform dspace;
     public GameObject cfab;
     public Transform cspace;
     public GameObject cinfo;
 
     public bool newDeck = false;
+
+    public GameObject plusdeckbutton;
+
+    //1 is Deck Manager, 2 is Deck Selector
+    int state = 1;
 
     public void Start()
     {
@@ -37,25 +42,33 @@ public class Decks : MonoBehaviour
                 addDeck(file);
             }
         }
+    }
+    public void setState(int st)
+    {
+        state = st;
+        if(state == 1)
+        {
+            plusdeckbutton.SetActive(false);
+        }
+        else
+        {
+            plusdeckbutton.SetActive(true);
+        }
         displayDecks();
     }
-
     public void addDeck()
     {
         newDeck = true;
         decks.Add(new Deck(""));
         curdeckpos = decks.Count - 1;
         curdeck = decks[curdeckpos];
-        GameObject go = Instantiate(dfab, new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject go = Instantiate(dfabstate1, new Vector3(0, 0, 0), Quaternion.identity);
         go.transform.SetParent(dspace);
         go.SetActive(true);
     }
     public void addDeck(string filepath)
     {
         decks.Add(loadDeck(filepath));
-        GameObject go = Instantiate(dfab, new Vector3(0, 0, 0), Quaternion.identity);
-        go.transform.SetParent(dspace);
-        go.SetActive(true);
     }
     public void addCard()
     {
@@ -78,6 +91,7 @@ public class Decks : MonoBehaviour
     {
         if(dtitlefield.text != curdeck.title)
         {
+            File.Delete("./Decks/" + curdeck.title + ".dat");
             curdeck.title = dtitlefield.text;
             dtitle.text = dtitlefield.text;
             displayDecks();
@@ -127,12 +141,25 @@ public class Decks : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-        for (int i = 0; i < decks.Count; i++)
+        if (state == 1)
         {
-            GameObject go = Instantiate(dfab, new Vector3(0, 0, 0), Quaternion.identity);
-            go.transform.SetParent(dspace);
-            go.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = decks[i].title;
-            go.SetActive(true);
+            for (int i = 0; i < decks.Count; i++)
+            {
+                GameObject go = Instantiate(dfabstate1, new Vector3(0, 0, 0), Quaternion.identity);
+                go.transform.SetParent(dspace);
+                go.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = decks[i].title;
+                go.SetActive(true);
+            }
+        }
+        else if (state == 2)
+        {
+            for (int i = 0; i < decks.Count; i++)
+            {
+                GameObject go = Instantiate(dfabstate2, new Vector3(0, 0, 0), Quaternion.identity);
+                go.transform.SetParent(dspace);
+                go.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = decks[i].title;
+                go.SetActive(true);
+            }
         }
     }
     public void displayCards()
@@ -156,7 +183,6 @@ public class Decks : MonoBehaviour
     public void RemoveCurrentDeck()
     {
         File.Delete("./Decks/" + curdeck.title + ".dat");
-        Debug.Log("./Decks/" + curdeck.title + ".dat");
         decks.Remove(curdeck);
         dtitlefield.text = "";
         displayDecks();
