@@ -6,29 +6,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class GameDeck : MonoBehaviour
+public class MultipleChoice : MonoBehaviour
 {
-    public Deck deck = new Deck("");
+    public GameController gc;
+    public GameDeck gdeck;
+    public Deck deck;
     public List<Card> choices;
     public int answerIndex = 0;
     public GameObject cfab;
-    public Transform cspace;
     public GameObject afab;
+    public Transform qspace;
+    public Transform cspace;
     public Transform aspace;
-    // Start is called before the first frame update
-    void Awake()
+    public void Start()
     {
-        deck = loadDeck(System.IO.Directory.GetFiles("./Decks/Temp/")[0]);
         generateRound();
-    }
-    public Deck loadDeck(string filepath)
-    {
-        FileStream file;
-        file = File.OpenRead(filepath);
-        BinaryFormatter bf = new BinaryFormatter();
-        Deck temp = (Deck)bf.Deserialize(file);
-        file.Close();
-        return temp;
     }
     public void generateRound()
     {
@@ -66,24 +58,25 @@ public class GameDeck : MonoBehaviour
     }
     public bool hasDuplicateAnswer(Card c)
     {
-        foreach(Card i in choices)
+        foreach (Card i in choices)
         {
-            if(c.getInfoLine(1) == i.getInfoLine(1))
+            if (c.getInfoLine(1) == i.getInfoLine(1))
             {
                 return true;
             }
         }
         return false;
     }
-    public void submitAnswer(int index)
+    public void submitAnswer(Transform t)
     {
-        if(answerIndex == index)
+        if (answerIndex == t.transform.GetSiblingIndex())
         {
             generateRound();
+            gc.RightAnswer();
         }
         else
         {
-
+            gc.WrongAnswer();
         }
     }
 }
