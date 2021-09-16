@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class SpaceGameController : GameController
 {
@@ -11,8 +13,20 @@ public class SpaceGameController : GameController
     public GameObject enemyship;
     public GameObject enemyshipfiringpoint;
 
+
+    public int health = 100;
+    public int score = 0;
+    public int combo = 0;
+
+
+    public Slider healthslider;
+    public TextMeshProUGUI scoretext;
+    public TextMeshProUGUI combotext;
+
     void Start()
     {
+        scoretext.text = "Score: " + score.ToString("D6");
+        combotext.text = "Combo: " + combo;
     }
     void Update()
     {
@@ -24,13 +38,11 @@ public class SpaceGameController : GameController
         go.transform.SetParent(playershipfiringpoint.transform);
         go.GetComponent<Bullet>().endpoint = enemyship;
         go.SetActive(true);
-        /*
-        GameObject go = Instantiate(explosion, new Vector3(enemyship.transform.position.x, enemyship.transform.position.y, 0), Quaternion.identity);
-        go.transform.SetParent(enemyship.transform);
-        go.transform.Rotate(new Vector3(180, 0, 0));
-        go.transform.localPosition = new Vector3(Random.Range(-0.25f, 0.25f), Random.Range(-0.25f, 0.25f), 0f);
-        float ranscale = Random.Range(0.2f, 0.75f);
-        go.transform.localScale = new Vector3(ranscale, ranscale, 0);*/
+
+        score = score + 100;
+        updateScore();
+        combo++;
+        updateCombo();
     }
     public override void WrongAnswer()
     {
@@ -38,14 +50,16 @@ public class SpaceGameController : GameController
         go.transform.SetParent(enemyshipfiringpoint.transform);
         go.GetComponent<Bullet>().endpoint = playership;
         go.SetActive(true);
-        /*
-        GameObject go = Instantiate(explosion, new Vector3(playership.transform.position.x, playership.transform.position.y, 0), Quaternion.identity);
-        go.transform.SetParent(playership.transform);
-        go.transform.Rotate(new Vector3(180, 0, 0));
-        go.transform.localPosition = new Vector3(Random.Range(-0.1f, 0.1f), Random.Range(-0.1f, 0.1f), 0f);
-        float ranscale = Random.Range(0.2f, 0.3f);
-        go.transform.localScale = new Vector3(ranscale, ranscale, 0);
-        */
+        combo = 0;
+        updateCombo();
+    }
+    public void updateScore()
+    {
+        scoretext.text = "Score: " + score.ToString("D6");
+    }
+    public void updateCombo()
+    {
+        combotext.text = "Combo: " + combo;
     }
 }
 

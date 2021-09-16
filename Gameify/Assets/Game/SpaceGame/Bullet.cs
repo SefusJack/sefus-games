@@ -9,12 +9,13 @@ public class Bullet : MonoBehaviour
     public GameObject endpoint;
     public void Start()
     {
+        float ranscale = Random.Range(0.3f, 1f);
+        transform.localScale = new Vector3(ranscale, ranscale, 0);
     }
     public void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, endpoint.transform.position, 0.01f);
-        transform.rotation = Quaternion.LookRotation(endpoint.transform.position, Vector3.back);
-        Debug.Log(transform.rotation);
+        transform.position = Vector3.MoveTowards(transform.position, endpoint.transform.position, 0.1f);
+        transform.rotation = Quaternion.Inverse(Quaternion.FromToRotation(endpoint.transform.position - transform.position, Vector3.up));
         if (transform.position == endpoint.transform.position)
         {
             Effect();
@@ -24,6 +25,7 @@ public class Bullet : MonoBehaviour
     public void Effect()
     {
         GameObject go = Instantiate(explosion, transform.position, Quaternion.identity);
-        go.transform.Rotate(new Vector3(180, 0, 0));
+        float ranscale = Random.Range(0.3f, 1f);
+        go.transform.localScale = new Vector3(ranscale, ranscale, 0);
     }
 }
