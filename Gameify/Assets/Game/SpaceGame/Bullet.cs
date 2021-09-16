@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour
     }
     public void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, endpoint.transform.position, 0.1f);
+        transform.position = Vector3.MoveTowards(transform.position, endpoint.transform.position, 0.3f);
         transform.rotation = Quaternion.Inverse(Quaternion.FromToRotation(endpoint.transform.position - transform.position, Vector3.up));
         if (transform.position == endpoint.transform.position)
         {
