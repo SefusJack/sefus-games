@@ -7,9 +7,11 @@ using TMPro;
 public class FadeTextMeshPro : MonoBehaviour
 {
     TextMeshProUGUI text;
+    public string s;
     void Start()
     {
         text = GetComponent<TextMeshProUGUI>();
+        text.text = s;
         StartCoroutine(Fade());
     }
 
