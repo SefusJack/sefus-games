@@ -62,6 +62,7 @@ public class Decks : MonoBehaviour
         decks.Add(new Deck(""));
         curdeckpos = decks.Count - 1;
         curdeck = decks[curdeckpos];
+        dtitlefield.text = "";
         GameObject go = Instantiate(dfabstate1, new Vector3(0, 0, 0), Quaternion.identity);
         go.transform.SetParent(dspace);
         go.SetActive(true);

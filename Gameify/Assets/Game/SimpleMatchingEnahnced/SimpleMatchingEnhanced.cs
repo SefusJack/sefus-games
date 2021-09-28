@@ -135,9 +135,10 @@ public class SimpleMatchingEnhanced : GameController
         incrementscorerunning = true;
         while (displayedscore <= score)
         {
-            yield return new WaitForSeconds(1/(multiplier*20f* timebonus));
+            displayedscore = displayedscore + 1 + ((score - displayedscore) / 10);
+            Debug.Log(displayedscore);
             scoretext.text = "Score: " + displayedscore.ToString("D6");
-            displayedscore += 5;
+            yield return new WaitForSeconds(0.05f);
         }
         if (displayedscore > score)
         {
