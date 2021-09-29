@@ -38,4 +38,10 @@ public class Deck
             c.printInfo();
         }
     }
+    public void incrementCorrect(int i){
+        deck[i].correct++;
+    }
+    public void incrementWrong(int i){
+        deck[i].wrong++;
+    }
 }

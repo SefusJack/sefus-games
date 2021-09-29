@@ -7,10 +7,12 @@ using TMPro;
 public class SimpleMatchingEnhanced : GameController
 {
     public GameObject cam;
+    public Transform gamefield;
     public GameObject scoreaddfab;
     public GameObject scoreaddspace;
     public GameObject timebonusfab;
     public GameObject timebonusspace;
+    public GameObject multiplechoicefab;
 
 
     public int health = 100;
@@ -39,6 +41,10 @@ public class SimpleMatchingEnhanced : GameController
         scoretext.text = "Score: " + score.ToString("D6");
         combotext.text = "Combo: " + combo;
         multipliertext.text = "x" + multiplier;
+
+        GameObject go = Instantiate(multiplechoicefab, new Vector3(0, 0, 0), Quaternion.identity);
+        go.transform.SetParent(gamefield);
+        go.SetActive(true);
     }
     void FixedUpdate()
     {
@@ -53,7 +59,6 @@ public class SimpleMatchingEnhanced : GameController
         if (timebonus > 1)
             timeBonusPopup();
         scoretoadd = (100 * multiplier) * timebonus;
-        Debug.Log(timebonus);
         scoreAddPopup();
 
         score = score + scoretoadd;
@@ -133,10 +138,9 @@ public class SimpleMatchingEnhanced : GameController
     IEnumerator incrementScore()
     {
         incrementscorerunning = true;
-        while (displayedscore <= score)
+        while (displayedscore < score)
         {
             displayedscore = displayedscore + 1 + ((score - displayedscore) / 10);
-            Debug.Log(displayedscore);
             scoretext.text = "Score: " + displayedscore.ToString("D6");
             yield return new WaitForSeconds(0.05f);
         }

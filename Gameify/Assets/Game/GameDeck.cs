@@ -9,16 +9,11 @@ using TMPro;
 public class GameDeck : MonoBehaviour
 {
     public Deck deck = new Deck("");
-    public GameObject multiplechoicefab;
-    public Transform gamefield;
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         deck = loadDeck(System.IO.Directory.GetFiles("./Decks/Temp/")[0]);
-        GameObject go = Instantiate(multiplechoicefab, new Vector3(0, 0, 0), Quaternion.identity);
-        go.transform.SetParent(gamefield);
-        go.SetActive(true);
-        go.GetComponent<MultipleChoice>().deck = deck;
+        //go.GetComponent<MultipleChoice>().deck = deck;
     }
     public Deck loadDeck(string filepath)
     {
@@ -28,5 +23,15 @@ public class GameDeck : MonoBehaviour
         Deck temp = (Deck)bf.Deserialize(file);
         file.Close();
         return temp;
+    }
+    public void saveDeck()
+    {
+        string destination = System.IO.Directory.GetFiles("./Decks/Temp/")[0];
+        FileStream file;
+        if (File.Exists(destination)) file = File.OpenWrite(destination);
+        else file = File.Create(destination);
+        BinaryFormatter bf = new BinaryFormatter();
+        bf.Serialize(file, deck);
+        file.Close();
     }
 }

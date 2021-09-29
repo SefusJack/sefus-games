@@ -9,9 +9,10 @@ using TMPro;
 public class MultipleChoice : MonoBehaviour
 {
     public GameController gc;
-    public GameDeck gdeck;
+    public GameDeck gd;
     public Deck deck;
     public List<Card> choices;
+    public List<int> posindeck;
     public int answerIndex = 0;
     public GameObject cfab;
     public GameObject afab;
@@ -20,11 +21,13 @@ public class MultipleChoice : MonoBehaviour
     public Transform aspace;
     public void Start()
     {
+        deck = gd.GetComponent<GameDeck>().deck;
         generateRound();
     }
     public void generateRound()
     {
         choices = new List<Card>();
+        posindeck = new List<int>();
         foreach (Transform child in cspace)
         {
             Destroy(child.gameObject);
@@ -37,11 +40,14 @@ public class MultipleChoice : MonoBehaviour
         answerIndex = Random.Range(0, 4);
         for (int i = 0; i < 4; i++)
         {
-            Card randomcard = deck.getCard(Random.Range(0, deck.Count));
+            int randomindex = Random.Range(0, deck.Count);
+            Card randomcard = deck.getCard(randomindex);
             while (choices.Contains(randomcard) || hasDuplicateAnswer(randomcard))
             {
-                randomcard = deck.getCard(Random.Range(0, deck.Count));
+                randomindex = Random.Range(0, deck.Count);
+                randomcard = deck.getCard(randomindex);
             }
+            posindeck.Add(randomindex);
             choices.Add(randomcard);
             GameObject go = Instantiate(cfab, new Vector3(0, 0, 0), Quaternion.identity);
             go.transform.SetParent(cspace);
@@ -69,14 +75,21 @@ public class MultipleChoice : MonoBehaviour
     }
     public void submitAnswer(Transform t)
     {
-        if (answerIndex == t.transform.GetSiblingIndex())
+        int tindex = t.transform.GetSiblingIndex();
+        if (answerIndex == tindex)
         {
-            generateRound();
             gc.RightAnswer();
+            gd.deck.incrementCorrect(posindeck[answerIndex]);
+            Debug.Log("Correct: " + deck.getCard(posindeck[answerIndex]).correct);
+            Debug.Log("Wrong: " + deck.getCard(posindeck[answerIndex]).wrong);
+            generateRound();
         }
         else
         {
             gc.WrongAnswer();
+            gd.deck.incrementWrong(posindeck[answerIndex]);
+            gd.deck.incrementWrong(posindeck[tindex]);
         }
+        gd.saveDeck();
     }
 }

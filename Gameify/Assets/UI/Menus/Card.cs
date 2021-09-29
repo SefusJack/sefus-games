@@ -7,6 +7,8 @@ public class Card
 {
     List<string> info;
     public string title;
+    public int correct = 0;
+    public int wrong = 0;
     public Card()
     {
         info = new List<string>();
