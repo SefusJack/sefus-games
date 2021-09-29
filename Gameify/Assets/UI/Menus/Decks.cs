@@ -150,6 +150,10 @@ public class Decks : MonoBehaviour
                 go.transform.SetParent(dspace);
                 go.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = decks[i].title;
                 go.SetActive(true);
+                if (decks[i].Count <= 4)
+                {
+                    go.transform.GetComponent<Button>().interactable = false;
+                }
             }
         }
         else if (state == 2)
