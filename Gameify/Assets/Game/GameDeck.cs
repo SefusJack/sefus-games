@@ -34,4 +34,16 @@ public class GameDeck : MonoBehaviour
         bf.Serialize(file, deck);
         file.Close();
     }
+
+    public void goBack()
+    {
+        string tempfile = System.IO.Directory.GetFiles("./Decks/Temp/")[0];
+        string destination = "./Decks/" + Path.GetFileName(tempfile);
+        FileStream file;
+        if (File.Exists(destination)) file = File.OpenWrite(destination);
+        else file = File.Create(destination);
+        BinaryFormatter bf = new BinaryFormatter();
+        bf.Serialize(file, deck);
+        file.Close();
+    }
 }
