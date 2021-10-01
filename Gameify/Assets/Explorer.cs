@@ -11,6 +11,7 @@ public class Explorer : MonoBehaviour
     public GameObject foldfab;
     public Transform fspace;
     string prevpath = "..";
+
     public void Start()
     {
         displayPath(System.IO.Directory.GetParent("./").FullName);
@@ -58,9 +59,18 @@ public class Explorer : MonoBehaviour
     }
     private char lineSeperator = '\n'; // It defines line seperate character
     private char fieldSeperator = ','; // It defines field seperate chracter
-    List<List<string>> file = new List<List<string>>();
+    public List<List<string>> file = new List<List<string>>();
     // Read data from CSV file
-    public void readData(string path)
+    public void importCSV(string path)
+    {
+        importDataFromCSV(path);
+        List<string> temp = Column(0);
+        foreach(string cell in temp)
+        {
+            //Debug.Log(cell);
+        }
+    }
+    public void importDataFromCSV(string path)
     {
         StreamReader sr = new StreamReader(path);
         while (sr.Peek() >= 0) 
@@ -68,24 +78,18 @@ public class Explorer : MonoBehaviour
             string line = sr.ReadLine();
             file.Add(new List<string>(line.Split(fieldSeperator)));
         }
-        foreach(List<string> row in file)
+    }
+    public List<string> Column(int index)
+    {
+        List<string> info = new List<string>();
+        foreach (List<string> row in file)
         {
-            foreach(string cell in row)
-            {
-                Debug.Log(cell);
-            }
+            info.Add(row[index]);
         }
-        /*
-        string[] records = csvFile.text.Split (lineSeperater);
-        foreach (string record in records)
-        {
-            string[] fields = record.Split(fieldSeperator);
-            foreach(string field in fields)
-            {
-                contentArea.text += field + "\t";
-            }
-            contentArea.text += '\n';
-        }
-        */
+        return info;
+    }
+    public List<string> getHeader()
+    {
+        return file[0];
     }
 }

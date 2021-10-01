@@ -7,6 +7,8 @@ using TMPro;
 public class DeckTitleMenu : MonoBehaviour
 {
     public Decks decks;
+    public GameObject decksmenu;
+    public GameObject prevmenu;
     public GameObject decktitlemenu;
     public TMP_InputField dtitlefield;
     public TextMeshProUGUI dtitle;
@@ -16,7 +18,9 @@ public class DeckTitleMenu : MonoBehaviour
         dtitle.text = "";
         if (saved)
         {
+            prevmenu = decksmenu;
             decktitlemenu.SetActive(false);
+            prevmenu.SetActive(true);
         }
         else
         {
@@ -24,11 +28,13 @@ public class DeckTitleMenu : MonoBehaviour
             {
                 decks.RemoveDeck(decks.curdeck);
                 decktitlemenu.SetActive(false);
+                prevmenu.SetActive(true);
                 decks.displayDecks();
             }
             else 
             {
                 decktitlemenu.SetActive(false);
+                prevmenu.SetActive(true);
             }
         }
         saved = false;
@@ -49,5 +55,8 @@ public class DeckTitleMenu : MonoBehaviour
             saved = true;
         }
     }
-
+    public void setPreviousMenu(GameObject pm)
+    {
+        prevmenu = pm;
+    }
 }

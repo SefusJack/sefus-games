@@ -10,6 +10,6 @@ public class FileButton : MonoBehaviour
     public TextMeshProUGUI pathgui = new TextMeshProUGUI();
     public void OnClick()
     {
-        explorer.readData(pathgui.text);
+        explorer.importCSV(pathgui.text);
     }
 }

@@ -67,6 +67,17 @@ public class Decks : MonoBehaviour
         go.transform.SetParent(dspace);
         go.SetActive(true);
     }
+    public void addDeck(Deck d)
+    {
+        newDeck = true;
+        decks.Add(d);
+        curdeckpos = decks.Count - 1;
+        curdeck = decks[curdeckpos];
+        dtitlefield.text = "";
+        GameObject go = Instantiate(dfabstate1, new Vector3(0, 0, 0), Quaternion.identity);
+        go.transform.SetParent(dspace);
+        go.SetActive(true);
+    }
     public void addDeck(string filepath)
     {
         decks.Add(loadDeck(filepath));
