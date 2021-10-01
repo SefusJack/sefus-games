@@ -6,7 +6,10 @@ using TMPro;
 
 public class FileButton : MonoBehaviour
 {
+    public Explorer explorer = new Explorer();
+    public TextMeshProUGUI pathgui = new TextMeshProUGUI();
     public void OnClick()
     {
+        explorer.readData(pathgui.text);
     }
 }

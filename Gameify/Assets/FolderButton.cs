@@ -12,8 +12,4 @@ public class FolderButton : MonoBehaviour
     {
         explorer.displayPath(pathgui.text);
     }
-    public int getDeckIndex()
-    {
-        return transform.GetSiblingIndex();
-    }
 }

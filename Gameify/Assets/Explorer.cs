@@ -56,4 +56,36 @@ public class Explorer : MonoBehaviour
             go.SetActive(true);
         }
     }
+    private char lineSeperator = '\n'; // It defines line seperate character
+    private char fieldSeperator = ','; // It defines field seperate chracter
+    List<List<string>> file = new List<List<string>>();
+    // Read data from CSV file
+    public void readData(string path)
+    {
+        StreamReader sr = new StreamReader(path);
+        while (sr.Peek() >= 0) 
+        {
+            string line = sr.ReadLine();
+            file.Add(new List<string>(line.Split(fieldSeperator)));
+        }
+        foreach(List<string> row in file)
+        {
+            foreach(string cell in row)
+            {
+                Debug.Log(cell);
+            }
+        }
+        /*
+        string[] records = csvFile.text.Split (lineSeperater);
+        foreach (string record in records)
+        {
+            string[] fields = record.Split(fieldSeperator);
+            foreach(string field in fields)
+            {
+                contentArea.text += field + "\t";
+            }
+            contentArea.text += '\n';
+        }
+        */
+    }
 }
