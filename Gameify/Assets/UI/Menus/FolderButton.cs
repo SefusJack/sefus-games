@@ -6,8 +6,8 @@ using TMPro;
 
 public class FolderButton : MonoBehaviour
 {
-    public Explorer explorer = new Explorer();
-    public TextMeshProUGUI pathgui = new TextMeshProUGUI();
+    public Explorer explorer;
+    public TextMeshProUGUI pathgui;
     public void OnClick()
     {
         explorer.displayPath(pathgui.text);

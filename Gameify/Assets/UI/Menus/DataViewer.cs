@@ -3,32 +3,48 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Threading;
 
 public class DataViewer : MonoBehaviour
 {
     bool includeheader = true;
     public Decks decks;
-    public Explorer explorer = new Explorer();
+    public Explorer explorer;
     public GameObject cfab;
     public GameObject columnfab;
     public Transform colsspace;
     public GameObject dropfab;
     public Transform dropspace;
-    List<List<string>> colsdata = new List<List<string>>();
+    public List<List<string>> colsdata = new List<List<string>>();
 
-    public void Start()
+    public void Open()
     {
+        colsdata = new List<List<string>>();
         for (int i = 0; i < 2; i++)
         {
-            GameObject go = Instantiate(dropfab, new Vector3(0, 0, 0), Quaternion.identity);
-            go.transform.SetParent(dropspace);
-            go.SetActive(true);
+            colsdata.Add(new List<string>());
             GameObject co = Instantiate(columnfab, new Vector3(0, 0, 0), Quaternion.identity);
             co.transform.SetParent(colsspace);
             co.SetActive(true);
-            colsdata.Add(new List<string>());
+            GameObject go = Instantiate(dropfab, new Vector3(0, 0, 0), Quaternion.identity);
+            go.transform.SetParent(dropspace);
+            go.SetActive(true);
+            displayColumn(0, i);
         }
     }
+
+    public void deleteView()
+    {
+        foreach (Transform child in dropspace)
+        {
+            Destroy(child.gameObject);
+        }
+        foreach (Transform child in colsspace)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
     public void displayColumn(int colnum, int cspacenum)
     {
         List<string> column = explorer.Column(colnum);

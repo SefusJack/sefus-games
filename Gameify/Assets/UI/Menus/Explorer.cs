@@ -61,21 +61,11 @@ public class Explorer : MonoBehaviour
             go.SetActive(true);
         }
     }
-    private char lineSeperator = '\n'; // It defines line seperate character
-    private char fieldSeperator = ','; // It defines field seperate chracter
-    public List<List<string>> file = new List<List<string>>();
-    // Read data from CSV file
-    public void importCSV(string path)
-    {
-        importDataFromCSV(path);
-        List<string> temp = Column(0);
-        foreach(string cell in temp)
-        {
-            //Debug.Log(cell);
-        }
-    }
+    public List<List<string>> file;
     public void importDataFromCSV(string path)
     {
+        file = new List<List<string>>();
+        columncount = 0;
         string value;
         using (TextReader fileReader = File.OpenText(path))
         {

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ToggleHandler : MonoBehaviour
 {
-    public DataViewer dataviewer = new DataViewer();
+    public DataViewer dataviewer;
     public void setHeaderBool()
     {
         bool on = GetComponent<Toggle>().isOn;
