@@ -80,8 +80,6 @@ public class MultipleChoice : MonoBehaviour
         {
             gc.RightAnswer();
             gd.deck.incrementCorrect(posindeck[answerIndex]);
-            Debug.Log("Correct: " + deck.getCard(posindeck[answerIndex]).correct);
-            Debug.Log("Wrong: " + deck.getCard(posindeck[answerIndex]).wrong);
             generateRound();
         }
         else
