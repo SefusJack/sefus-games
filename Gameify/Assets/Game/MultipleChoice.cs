@@ -19,10 +19,12 @@ public class MultipleChoice : MonoBehaviour
     public Transform qspace;
     public Transform cspace;
     public Transform aspace;
+    public float hardcardchance = 25f;
     public void Start()
     {
         deck = gd.GetComponent<GameDeck>().deck;
         generateRound();
+        List<Card> cards = deck.getMatureCards();
     }
     public void generateRound()
     {
@@ -38,15 +40,44 @@ public class MultipleChoice : MonoBehaviour
         }
 
         answerIndex = Random.Range(0, 4);
+        bool hardcard = Random.Range(0, 100) <= hardcardchance;
         for (int i = 0; i < 4; i++)
         {
-            int randomindex = Random.Range(0, deck.Count);
-            Card randomcard = deck.getCard(randomindex);
-            while (choices.Contains(randomcard) || hasDuplicateAnswer(randomcard))
+            Card randomcard;
+            int randomindex;
+            if (deck.hasNewCards())
             {
-                randomindex = Random.Range(0, deck.Count);
-                randomcard = deck.getCard(randomindex);
+                randomcard = generateNewCard();
+                while (choices.Contains(randomcard) || hasDuplicateAnswer(randomcard))
+                {
+                    randomcard = generateNewCard();
+                }
             }
+            else
+            {
+                if (hardcard && answerIndex == i)
+                    randomcard = generateHardCard();
+                else
+                {
+                    if (Random.Range(0, 100) <= 50)
+                        randomcard = generateMediumCard();
+                    else
+                        randomcard = generateEasyCard();
+                }
+                while (choices.Contains(randomcard) || hasDuplicateAnswer(randomcard))
+                {
+                    if (hardcard && answerIndex == i)
+                        randomcard = generateHardCard();
+                    else
+                    {
+                        if (Random.Range(0, 100) <= 50)
+                            randomcard = generateMediumCard();
+                        else
+                            randomcard = generateEasyCard();
+                    }
+                }
+            }
+            randomindex = deck.IndexOf(randomcard);
             posindeck.Add(randomindex);
             choices.Add(randomcard);
             GameObject go = Instantiate(cfab, new Vector3(0, 0, 0), Quaternion.identity);
@@ -72,6 +103,90 @@ public class MultipleChoice : MonoBehaviour
             }
         }
         return false;
+    }
+    Card generateNewCard()
+    {
+        List<Card> cards = deck.getNewCards();
+        if (cards.Count > 0)
+        {
+            Card c = cards[Random.Range(0, cards.Count)];
+            if (choices.Contains(c) || hasDuplicateAnswer(c))
+                if (cards.Count > 4)
+                    return generateNewCard();
+                else
+                    if (Random.Range(0, 100) <= 75)
+                        return generateMediumCard();
+                    else
+                        return generateHardCard();
+            else
+                return c;
+        }
+        else
+            if (Random.Range(0, 100) <= 75)
+            return generateMediumCard();
+        else
+            return generateHardCard();
+    }
+
+    Card generateEasyCard()
+    {
+        List<Card> cards = deck.getMatureCards();
+        if (cards.Count > 0)
+        {
+            Card c = cards[Random.Range(0, cards.Count)];
+            if (choices.Contains(c) || hasDuplicateAnswer(c))
+                if (Random.Range(0, 100) <= 75)
+                    return generateMediumCard();
+                else
+                    return generateHardCard();
+            else
+                return c;
+        }
+        else
+            if (Random.Range(0, 100) <= 75)
+                return generateMediumCard();
+            else
+                return generateHardCard();
+    }
+    Card generateMediumCard()
+    {
+        List<Card> cards = deck.getMediumCards();
+        if (cards.Count > 0)
+        {
+            Card c = cards[Random.Range(0, cards.Count)];
+            if (choices.Contains(c) || hasDuplicateAnswer(c))
+                if (Random.Range(0, 100) <= 50)
+                    return generateEasyCard();
+                else
+                    return generateHardCard();
+            else
+                return c;
+        }
+        else
+            if (Random.Range(0, 100) <= 50)
+                return generateEasyCard();
+            else
+                return generateHardCard();
+    }
+    Card generateHardCard()
+    {
+        List<Card> cards = deck.getHardCards();
+        if (cards.Count > 0)
+        {
+            Card c = cards[Random.Range(0, cards.Count)];
+            if (choices.Contains(c) || hasDuplicateAnswer(c))
+                if (Random.Range(0, 100) <= 25)
+                    return generateEasyCard();
+                else
+                    return generateMediumCard();
+            else
+                return c;
+        }
+        else
+            if (Random.Range(0, 100) <= 25)
+                return generateEasyCard();
+            else
+                return generateMediumCard();
     }
     public void submitAnswer(Transform t)
     {

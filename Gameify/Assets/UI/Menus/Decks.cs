@@ -179,8 +179,8 @@ public class Decks : MonoBehaviour
         }
     }
     public void displayCards()
-    {
-        foreach(Transform child in cspace)
+    {   
+        foreach (Transform child in cspace)
         {
             Destroy(child.gameObject);
         }

@@ -9,7 +9,6 @@ public class Deck
     List<Card> deck;
     public string title = "";
     public int Count = 0;
-    bool newcard = false;
     public Deck(string t)
     {
         deck = new List<Card>();
@@ -19,13 +18,11 @@ public class Deck
     {
         deck.Add(c);
         Count++;
-        newcard = true;
     }
     public void Remove(Card c)
     {
         deck.Remove(c);
         Count--;
-        getNewCards();
     }
     public Card getCard(int i)
     {
@@ -54,12 +51,6 @@ public class Deck
     {
         return deck.IndexOf(c);
     }
-    public bool hasNewCards()
-    {
-        getNewCards();
-        return newcard;
-    }
-
     public List<Card> getCardsByCorrect(int range)
     {
         List<Card> temp = new List<Card>();
@@ -83,18 +74,6 @@ public class Deck
         }
         temp = temp.OrderBy(c => c.getRatio()).ToList();
         return temp.GetRange(0, range);
-    }
-    public List<Card> getMediumCards()
-    {
-        List<Card> temp = new List<Card>();
-        foreach (Card c in deck)
-        {
-            if (!c.isMature() && !c.isHard() && !c.isNew())
-            {
-                temp.Add(c);
-            }
-        }
-        return temp;
     }
     public List<Card> getHardCards()
     {
@@ -130,22 +109,6 @@ public class Deck
                 temp.Add(c);
             }
         }
-        return temp;
-    }
-    public List<Card> getNewCards()
-    {
-        List<Card> temp = new List<Card>();
-        foreach (Card c in deck)
-        {
-            if (c.isNew())
-            {
-                temp.Add(c);
-            }
-        }
-        if (temp.Count == 0)
-            newcard = false;
-        else
-            newcard = true;
         return temp;
     }
 }
