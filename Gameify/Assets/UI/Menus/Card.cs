@@ -9,6 +9,7 @@ public class Card
     public string title;
     public int correct = 0;
     public int wrong = 0;
+    public float avgtime = 1;
     public Card()
     {
         info = new List<string>();
@@ -57,6 +58,12 @@ public class Card
             tempw = 1;
 
         return (float)tempc / (float)tempw;
+    }
+    public float getAverageTime(){
+        return avgtime;
+    }
+    public void updateAverageTime(float time){
+        avgtime = ((avgtime * (correct + 1)) + time) / correct;
     }
     public bool isMature()
     {

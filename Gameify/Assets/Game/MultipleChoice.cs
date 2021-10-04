@@ -20,6 +20,10 @@ public class MultipleChoice : MonoBehaviour
     public Transform cspace;
     public Transform aspace;
     public float hardcardchance = 25f;
+
+    public float rightanswertime = 0;
+    public float lastrightanswertime = 0;
+    
     public void Start()
     {
         deck = gd.GetComponent<GameDeck>().deck;
@@ -28,6 +32,8 @@ public class MultipleChoice : MonoBehaviour
     }
     public void generateRound()
     {
+        lastrightanswertime = rightanswertime;
+
         choices = new List<Card>();
         posindeck = new List<int>();
         foreach (Transform child in cspace)
@@ -195,6 +201,8 @@ public class MultipleChoice : MonoBehaviour
         {
             gc.RightAnswer();
             gd.deck.incrementCorrect(posindeck[answerIndex]);
+            rightanswertime = Time.time;
+            gd.deck.updateAverageCardTime(posindeck[answerIndex], rightanswertime - lastrightanswertime);
             generateRound();
         }
         else

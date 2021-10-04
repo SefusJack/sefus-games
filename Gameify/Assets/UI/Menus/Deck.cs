@@ -50,6 +50,14 @@ public class Deck
     {
         deck[i].wrong++;
     }
+    public void updateAverageCardTime(int i, float time)
+    {
+        deck[i].updateAverageTime(time);
+    }
+    public float getAverageCardTime(int i)
+    {
+        return deck[i].getAverageTime();
+    }
     public int IndexOf(Card c)
     {
         return deck.IndexOf(c);
