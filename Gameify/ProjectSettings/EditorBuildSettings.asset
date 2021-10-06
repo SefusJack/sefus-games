@@ -11,10 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Simple Matching.unity
     guid: ec1e36164403c294e9b8e5f994d5fed9
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/Space.unity
+    guid: 2f8f72e1c734d434fb30645869b94b5f
+  - enabled: 1
+    path: Assets/Scenes/Simple Matching (Enhanced).unity
+    guid: 06635a3bc349b4c47b2886f72b007d1d
   m_configObjects: {}
