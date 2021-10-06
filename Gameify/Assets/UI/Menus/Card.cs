@@ -10,16 +10,20 @@ public class Card
     public int correct = 0;
     public int wrong = 0;
     public float avgtime = 1;
+    //0 is new, 1 is young, 2 is mature
+    public int state = 0;
     public Card()
     {
         info = new List<string>();
         info.Add("");
         info.Add("");
+        state = 0;
     }
     public Card(List<string> list)
     {
         info = list;
         title = list[0];
+        state = 0;
     }
     public string getInfoLine(int index)
     {
@@ -65,23 +69,29 @@ public class Card
     public void updateAverageTime(float time){
         avgtime = ((avgtime * (correct + 1)) + time) / correct;
     }
-    public bool isMature()
+    public void updateState()
     {
-        if (getRatio() >= 1.5f)
-            return true;
-        else
-            return false;
-    }
-    public bool isHard()
-    {
-        if (getRatio() < 0.5f && getRatio() > 0)
-            return true;
-        else
-            return false;
+        if(isNew()){state = 0;}
+        else if(isYoung()){state = 1;}
+        else if(isMature()){state = 2;}
     }
     public bool isNew()
     {
         if (correct == 0 && wrong == 0)
+            return true;
+        else
+            return false;
+    }
+    public bool isYoung()
+    {
+        if (getRatio() < 1.5f && getRatio() > 0)
+            return true;
+        else
+            return false;
+    }
+    public bool isMature()
+    {
+        if (getRatio() >= 1.5f)
             return true;
         else
             return false;

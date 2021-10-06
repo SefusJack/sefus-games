@@ -9,7 +9,11 @@ public class Deck
     List<Card> deck;
     public string title = "";
     public int Count = 0;
-    bool newcard = false;
+
+    public List<int> newcards = new List<int>();
+    public List<int> youngcards = new List<int>();
+    public List<int> maturecards = new List<int>();
+
     public Deck(string t)
     {
         deck = new List<Card>();
@@ -18,14 +22,13 @@ public class Deck
     public void Add(Card c)
     {
         deck.Add(c);
+        newcards.Add(deck.Count-1);
         Count++;
-        newcard = true;
     }
     public void Remove(Card c)
     {
         deck.Remove(c);
         Count--;
-        getNewCards();
     }
     public Card getCard(int i)
     {
@@ -45,10 +48,12 @@ public class Deck
     public void incrementCorrect(int i)
     {
         deck[i].correct++;
+        updateCardState(i);
     }
     public void incrementWrong(int i)
     {
         deck[i].wrong++;
+        updateCardState(i);
     }
     public void updateAverageCardTime(int i, float time)
     {
@@ -62,12 +67,41 @@ public class Deck
     {
         return deck.IndexOf(c);
     }
-    public bool hasNewCards()
+    public void updateCardState(int i)
     {
-        getNewCards();
-        return newcard;
+        int prevstate = deck[i].state;
+        deck[i].updateState();
+        int newstate = deck[i].state;
+        if(prevstate != newstate)
+        {
+            if(prevstate == 0)
+            {
+                newcards.Remove(newcards.IndexOf(i));
+            }
+            else if(prevstate == 1)
+            {
+                youngcards.Remove(youngcards.IndexOf(i));
+            }
+            else if(prevstate == 2)
+            {
+                maturecards.Remove(maturecards.IndexOf(i));
+            }
+            if(newstate == 0)
+            {
+                newcards.Add(i);
+            }
+            else if(newstate == 1)
+            {
+                youngcards.Add(i);
+            }
+            else if(newstate == 2)
+            {
+                maturecards.Add(i);
+            }
+        }
+        Debug.Log("Prevstate: " + prevstate);
+        Debug.Log("Newstate: " + newstate);
     }
-
     public List<Card> getCardsByCorrect(int range)
     {
         List<Card> temp = new List<Card>();
@@ -92,6 +126,7 @@ public class Deck
         temp = temp.OrderBy(c => c.getRatio()).ToList();
         return temp.GetRange(0, range);
     }
+    /*
     public List<Card> getMediumCards()
     {
         List<Card> temp = new List<Card>();
@@ -156,4 +191,5 @@ public class Deck
             newcard = true;
         return temp;
     }
+    */
 }
