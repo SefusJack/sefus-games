@@ -172,7 +172,6 @@ public class MultipleChoice : MonoBehaviour
         if (answerIndex == tindex)
         {
             gc.RightAnswer();
-            Debug.Log(posindeck[answerIndex]);
             gd.deck.incrementCorrect(posindeck[answerIndex]);
             rightanswertime = Time.time;
             gd.deck.updateAverageCardTime(posindeck[answerIndex], rightanswertime - lastrightanswertime);

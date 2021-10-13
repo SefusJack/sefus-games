@@ -99,10 +99,6 @@ public class Deck
                 maturecards.Add(i);
             }
         }
-        Debug.Log(deck[i].getInfoLine(0));
-        Debug.Log("Newcards : " + newcards.Count);
-        Debug.Log("Youngcards : " + youngcards.Count);
-        Debug.Log("Maturecards : " + maturecards.Count);
     }
     public List<Card> getCardsByCorrect(int range)
     {
