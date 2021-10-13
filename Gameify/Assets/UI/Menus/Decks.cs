@@ -34,6 +34,14 @@ public class Decks : MonoBehaviour
     public void Start()
     {
         decks = new List<Deck>();
+        if(!Directory.Exists("./Decks/"))
+        {
+            Directory.CreateDirectory("./Decks");
+        }
+        if(!Directory.Exists("./Decks/Temp/"))
+        {
+            Directory.CreateDirectory("./Decks/Temp/");
+        }
         string[] files = System.IO.Directory.GetFiles("./Decks/");
         foreach (string file in files)
         {

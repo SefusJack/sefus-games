@@ -19,6 +19,7 @@ public class GameSelection : MonoBehaviour
         games = new List<string>();
         for (int i = 1; i < sceneCount; i++)
         {
+            Debug.Log(System.IO.Path.GetFileNameWithoutExtension(UnityEngine.SceneManagement.SceneUtility.GetScenePathByBuildIndex(i)));
             games.Add(System.IO.Path.GetFileNameWithoutExtension(UnityEngine.SceneManagement.SceneUtility.GetScenePathByBuildIndex(i)));
         }
         displayGames();
