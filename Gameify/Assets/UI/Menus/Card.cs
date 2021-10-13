@@ -84,7 +84,8 @@ public class Card
     }
     public bool isYoung()
     {
-        if (getRatio() < 1.5f && getRatio() > 0)
+        float ratio = getRatio();
+        if (ratio < 1.5f && ratio > 0)
             return true;
         else
             return false;

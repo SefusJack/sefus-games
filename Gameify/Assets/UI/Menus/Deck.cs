@@ -76,15 +76,15 @@ public class Deck
         {
             if(prevstate == 0)
             {
-                newcards.Remove(newcards.IndexOf(i));
+                newcards.RemoveAt(newcards.IndexOf(i));
             }
             else if(prevstate == 1)
             {
-                youngcards.Remove(youngcards.IndexOf(i));
+                youngcards.RemoveAt(youngcards.IndexOf(i));
             }
             else if(prevstate == 2)
             {
-                maturecards.Remove(maturecards.IndexOf(i));
+                maturecards.RemoveAt(maturecards.IndexOf(i));
             }
             if(newstate == 0)
             {
@@ -99,8 +99,10 @@ public class Deck
                 maturecards.Add(i);
             }
         }
-        Debug.Log("Prevstate: " + prevstate);
-        Debug.Log("Newstate: " + newstate);
+        Debug.Log(deck[i].getInfoLine(0));
+        Debug.Log("Newcards : " + newcards.Count);
+        Debug.Log("Youngcards : " + youngcards.Count);
+        Debug.Log("Maturecards : " + maturecards.Count);
     }
     public List<Card> getCardsByCorrect(int range)
     {
